@@ -23,6 +23,7 @@ fetch(endpoint)
   .then(data => cities.push(...data));
 
 function findMatches(wordToMatch, cities) {
+  if (wordToMatch === '') return []
   return cities.filter(place => {
     // here we need to figure out if the city or state matches what was searched
     const regex = new RegExp(wordToMatch, 'gi');
@@ -47,7 +48,12 @@ function displayMatches() {
       </li>
     `;
   }).join('');
-  suggestions.innerHTML = html;
+  
+  if (html.length === 0) {
+    suggestions.innerHTML = '<li>Filter for a city</li><li>or a state</li>'
+  } else {
+    suggestions.innerHTML = html
+  }
 }
 
 const searchInput = document.querySelector('.search');
